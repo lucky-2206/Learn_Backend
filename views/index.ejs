@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Read the HTML File</h1>
+    <!-- Here we can read the name passed from index.js -->
+    <p>Hello <%= name %></p>
+    
+    <!-- By using the above command if we pass anything except name basically which we haven't pass then if shows error
+    To overcome this we use locals -->
+    <!-- using locals if we pass anything which we haven't pass then it won't shows any error -->
+
+    <p>Hello <%=locals.name%></p>
+
+</body>
+</html>
