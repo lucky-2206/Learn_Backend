@@ -1,6 +1,28 @@
 import express from 'express';
 import path from 'path'
+import mongoose from 'mongoose';
+import { name } from 'ejs';
+
+// to connect mongoose
+mongoose.connect("mongodb://127.0.0.1:27017",{
+    dbName :'test',
+
+})
+.then((c)=>console.log("Database Connected"))
+.catch((e)=> console.log(e));
+
+// creating a schema 
+const messageSchema = new mongoose.Schema({
+    name:String,
+    email:String
+})
+
+const Message = mongoose.model("Message",messageSchema);
+
+
+
 const app = express();
+
 
 //the below line is used when we are statically using a file
 app.use(express.static(path.join(path.resolve(),"public")));
@@ -23,14 +45,21 @@ app.get("/",(req,res)=>{
     
 });
 
+app.get("/add", async (req,res)=>{
+    await Message.create({name:"Vaibhav",email:"hey@2gmail.com"})
+    res.send("Done");
+});
+
 app.get("/success",(req,res)=>{
     res.render("success");
     
 });
-app.post("/contact",(req,res)=>{
-    user.push({userName:req.body.name,email:req.body.email});
-    
-    //instes of redirectiing it and then making another get for success we can direclty render it
+app.post("/contact",async (req,res)=>{
+    const {name,email} = req.body;
+    const formData=({name:name,email:email});
+    console.log(formData)
+    await Message.create(formData)
+    //instead of redirectiing it and then making another get for success we can direclty render it
     // res.render("success");
     res.redirect("/success");
 })
